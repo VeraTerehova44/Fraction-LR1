@@ -12,25 +12,39 @@ namespace Fractions
         {
             Drobi drob1 = new Drobi(2);
             Drobi drob2 = new Drobi(3, 2);
-            Drobi drob2 = new Drobi(3, 2, 5);
-            Console.WriteLine(Drobi.Desyat(a.ch, a.zn));
-            Console.WriteLine(Fractions.ToDouble(a1.ch, a1.zn));
-            Console.WriteLine(Fractions.ToDouble(a2.ch, a2.zn));
-            drob1.GetDrobe(drob1);
-            drob1.PlusOrMinus();
+            Drobi drob3 = new Drobi(3, 2, 5);
 
-            Console.WriteLine(drob2[0]);
+            Console.WriteLine(drob1.Desyat());
+            Console.WriteLine(drob2.Desyat());
+            Console.WriteLine(drob3.Desyat());
 
-            double deciatChicl = drob1.Desyat();
-            Console.WriteLine(deciatChicl);
+            Console.WriteLine(drob1.PlusOrMinus(drob1.Ch, drob1.Zn));
 
+            Console.WriteLine("Числитель {0}", drob2[0]);
+            Console.WriteLine("Знаменатель {0}", drob2[1]);
 
-            Drobi drobResult = drob1 + drob2;
-            Console.WriteLine($"{ drobResult.Ch}/{drobResult.Zn}");
+            Console.WriteLine("Сложение: {0}", drob1 + drob2);
+            Console.WriteLine("Сложение: {0}", drob2 + drob3);
+            Console.WriteLine("Сложение: {0}", drob3 + drob1);
 
+            Console.WriteLine("Вычитание: {0}", drob1 - drob2);
+            Console.WriteLine("Вычитание: {0}", drob2 - drob3);
+            Console.WriteLine("Вычитание: {0}", drob3 - drob1);
+
+            Console.WriteLine("Деление: {0}", drob1 / drob2);
+            Console.WriteLine("Деление: {0}", drob2 / drob3);
+            Console.WriteLine("Деление: {0}", drob3 / drob1);
+
+            Console.WriteLine("Умножение: {0}", drob1 * drob2);
+            Console.WriteLine("Умножение: {0}", drob2 * drob3);
+            Console.WriteLine("Умножение: {0}", drob3 * drob1);
 
             drob1.EventChanger += Method.MyMethod;
-            drob1.Ch = 7;
+            drob1.EventChangerZn += Method.MyMethod2;            
+            drob1.Zn = 7;
+            drob1.Ch = 9;
+
+            
 
             Console.ReadKey();
         }
@@ -56,10 +70,14 @@ namespace Fractions
             ch = z * b + a;
             zn = b;
         }
+
+
         public double Desyat()
         {
             return (double)(ch) / zn;
         }
+
+
         public static Drobi operator +(Drobi x, Drobi y)
         {
             return new Drobi(x.ch * y.zn + y.ch * x.zn, x.zn * y.zn);
@@ -76,8 +94,12 @@ namespace Fractions
         {
             return new Drobi(x.ch * y.zn, x.zn * y.ch);
         }
+
+
         public override string ToString() => $"{ch} / {zn}";
-        public static bool PlusOrMinus(int ch, int zn)
+
+
+        public bool PlusOrMinus(int ch, int zn)
         {
             double result = ((double)ch / zn);
             if (result >= 0)
@@ -123,7 +145,12 @@ namespace Fractions
     {
         public static void MyMethod(Drobi a, int x)
         {
-            Console.WriteLine("Дробь изменена");
+            Console.WriteLine("Знаменатель изменен");
         }
+        public static void MyMethod2(Drobi a, int x)
+        {
+            Console.WriteLine("Числитель изменен");
+        }
+
     }
 }
